@@ -1,10 +1,18 @@
 import bpy 
 import bmesh 
 
+# Delete all objects 
+def delete_all(): 
+    if(len(bpy.data.objects) != 0): 
+        bpy.ops.object.select_all(action='SELECT') 
+        bpy.ops.object.delete(use_global=False)
+
+
 # Must start in object mode 
-bpy.ops.object.mode_set(mode='OBJECT') 
-bpy.ops.object.select_all(action='SELECT') 
-bpy.ops.object.delete() 
+# bpy.ops.object.mode_set(mode='OBJECT') 
+# bpy.ops.object.select_all(action='SELECT') 
+# bpy.ops.object.delete() 
+delete_all()
 
 # Create a cube and enter Edit Mode 
 bpy.ops.mesh.primitive_cube_add(size=1, location=(0, 0, 0)) 
@@ -12,7 +20,7 @@ bpy.ops.object.mode_set(mode='EDIT')
 
 bpy.ops.mesh.loopcut_slide(
     MESH_OT_loopcut={
-        "number_cuts":3, 
+        "number_cuts":5, 
         "smoothness":0, 
         "falloff":
         'INVERSE_SQUARE', 
@@ -21,7 +29,7 @@ bpy.ops.mesh.loopcut_slide(
         "mesh_select_mode_init":(True, False, False)
     }, 
     TRANSFORM_OT_edge_slide={
-        "value":-0.414013, 
+        "value":0.0, 
         "single_side":False, 
         "use_even":False, 
         "flipped":False, 
