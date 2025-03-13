@@ -1,6 +1,8 @@
 import bpy 
-import bmesh 
+import bmesh
+import functools 
 
+interval = 1.0
 edge_index = 0
 
 def select_edge(bm, i):
@@ -15,7 +17,11 @@ def every_interval():
     edge_index += 1
     if edge_index >= len(bm.edges):
         edge_index = 0
-    return 2.0
+    return interval
+
+def after(fun):
+    print("Unregistering")
+    bpy.app.timers.unregister(fun)
          
 # Must start in object mode 
 #bpy.ops.object.mode_set(mode='OBJECT') 
@@ -28,4 +34,6 @@ def every_interval():
 bm = bmesh.from_edit_mesh(bpy.context.object.data)
 
 bpy.app.timers.register(every_interval)
+bpy.app.timers.register(functools.partial(after, every_interval), first_interval=15.0)
+
 
